@@ -1,0 +1,43 @@
+{% extends "data_products/base.html" %}
+{% block nav %}
+<div class="topnav">
+  <a id="logo" href="https://hubmapconsortium.org" title="HuBMAP Consortium" data-height="50" data-padding="50"><img class="logo-main scale-with-grid" src="https://hubmapconsortium.org/wp-content/uploads/2023/03/hubmap-with-name-_medium@0.5x.png" height="46"></a>
+<a href="{% url 'index' %}" style="font-family:'Arial'; font-size:30px; padding-top: 20px">Index</a>
+</div>
+{% endblock %}
+{% block content %}
+    <h1 style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue,sans-serif">{{ product.tissue.tissuetype }}</h1>
+  {% block links %}
+  {% endblock %}
+  {% if product.umap_plot %}
+  <img style="float: left; margin-left: 60px; margin-right: 100px; display: inline-block;" src  = "{{ product.umap_plot.url }}" alt="umap plot">
+  {% endif %}
+	<center>
+	  <br>
+	  <button type="button" class="collapsible">{{"Datasets in this Data Product"}}<span class="down-caret"></span></button>
+<div class="content">
+   <ul>{% for dataset in product.dataSets.all %}
+    	<li><a href="https://portal.hubmapconsortium.org/browse/dataset/{{ dataset.uuid }}", style="font-family:'Arial'">{{ dataset.hbmid }}</a></li><br>
+    {% endfor %}</ul>
+    </div>
+	</center>
+    {% block innercontent %}
+    {% endblock %}
+    </div>
+<!--<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "list-item") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "list-item";
+    }
+  });
+}
+</script>-->
+{% endblock %}
