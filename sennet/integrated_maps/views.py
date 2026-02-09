@@ -14,7 +14,7 @@ def index(request):
             latest_data_product_t=DataProduct.objects.filter(tissue=t, assay=a).order_by("-creation_time")
             if(len(latest_data_product_t)>0):
                 latest_data_product_list.append(latest_data_product_t[0])
-    template = loader.get_template("data_products/index.html")
+    template = loader.get_template("integrated_maps/index.html")
     context = {
         "latest_data_product_list": latest_data_product_list,
     }
@@ -27,16 +27,16 @@ def detail(request, data_product_id):
     product = get_object_or_404(DataProduct, pk=data_product_id)
     assay = product.assay
     if assay.assayName=="rna-seq" or assay.assayName=="multiome-rna-atac":
-        template = loader.get_template("data_products/rna-detail.html")
+        template = loader.get_template("integrated_maps/rna-detail.html")
     elif assay.assayName=="atac":
-        template = loader.get_template("data_products/atac-detail.html")
+        template = loader.get_template("integrated_maps/atac-detail.html")
     elif assay.assayName=="codex":
-        template = loader.get_template("data_products/codex-detail.html")
+        template = loader.get_template("integrated_maps/codex-detail.html")
     else:
-        template = loader.get_template("data_products/detail.html")
+        template = loader.get_template("integrated_maps/detail.html")
     context = {"product": product,}
     return HttpResponse(template.render(context, request))
-    #return render(request, "data_products/detail.html", {"product": product})
+    #return render(request, "integrated_maps/detail.html", {"product": product})
 
 def detail_latest(request, tissuecode, assayName):
     tissue = Tissue.objects.filter(tissuecode=tissuecode)
@@ -50,13 +50,13 @@ def detail_latest(request, tissuecode, assayName):
         raise Http404("Data product not found for the specified tissue and assay.")
     context = {"product": latest_data_product}
     if assayName in ["rna-seq", "multiome-rna-atac"]:
-        template = loader.get_template("data_products/rna-detail.html")
+        template = loader.get_template("integrated_maps/rna-detail.html")
     elif assayName == "atac":
-        template = loader.get_template("data_products/atac-detail.html")
+        template = loader.get_template("integrated_maps/atac-detail.html")
     elif assayName == "codex":
-        template = loader.get_template("data_products/codex-detail.html")
+        template = loader.get_template("integrated_maps/codex-detail.html")
     else:
-        template = loader.get_template("data_products/detail.html")
+        template = loader.get_template("integrated_maps/detail.html")
 
     return HttpResponse(template.render(context, request))
 
@@ -64,7 +64,7 @@ def tissue(request, tissuetype):
 
     tissue = Tissue.objects.filter(tissuetype=tissuetype)
     tissue_data_product_list = DataProduct.objects.filter(tissue__in=tissue.all()).order_by("-creation_time")
-    template = loader.get_template("data_products/index.html")
+    template = loader.get_template("integrated_maps/index.html")
     context = {
         "latest_data_product_list": tissue_data_product_list,
     }

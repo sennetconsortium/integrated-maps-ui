@@ -4,4 +4,4 @@ from django.template import loader
 
 def index(request):
 
-    return redirect("/data_products")
+    return redirect("/integrated_maps")

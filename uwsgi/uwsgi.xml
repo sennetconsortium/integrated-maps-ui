@@ -5,9 +5,9 @@
 	<threads>4</threads>
 	<workers>3</workers>
 	<socket>:5000</socket>
-	<chdir>/opt/data-products-ui</chdir>
+	<chdir>/opt/integrated_maps-ui</chdir>
 	<plugin>python3</plugin>
-	<module>data_products_ui.wsgi</module>
+	<module>integrated_maps_ui.wsgi</module>
 	<env>LC_ALL=en_US.UTF-8</env>
 	<env>LANG=en_US.UTF-8</env>
 	<env>PYTHONIOENCODING=utf-8</env>

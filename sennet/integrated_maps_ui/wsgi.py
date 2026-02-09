@@ -1,5 +1,5 @@
 """
-WSGI config for data_products_ui project.
+WSGI config for integrated_maps_ui project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "data_products_ui.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "integrated_maps_ui.settings")
 
 application = get_wsgi_application()

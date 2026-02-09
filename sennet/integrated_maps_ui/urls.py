@@ -13,7 +13,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("admin/", admin.site.urls),
-    path("data_products/", include("data_products.urls")),
+    path("integrated_maps/", include("integrated_maps.urls")),
     path("api/", include("api.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

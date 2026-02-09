@@ -10,18 +10,18 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      -  /opt/repositories/vm024-dev/data-products-ui/data/postgres:/var/lib/postgresql/data
+      -  /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/data/postgres:/var/lib/postgresql/data
   uwsgi:
-    image: "sennet/data-products-ui-prod:latest"
+    image: "sennet/integrated-maps-ui-prod:latest"
     ports:
       - "5000:5000"
     expose:
       - 5000
     volumes:
       - /opt/repositories/vm024-dev/data-products-ui/secret:/opt/secret/
-      - /opt/repositories/vm024-dev/data-products-ui/data:/opt/data/
-      - /opt/repositories/vm024-dev/data-products-ui/pipeline_outputs:/opt/pipeline_outputs/
-      - /opt/repositories/vm024-dev/data-products-ui/media:/opt/media/
+      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/data:/opt/data/
+      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/pipeline_outputs:/opt/pipeline_outputs/
+      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/media:/opt/media/
   nginx:
     image: "nginx:alpine"
     volumes:
@@ -43,5 +43,5 @@ services:
       - "4838:3838"
     volumes:
       - /hive/hubmap/data/public/hubmap-data-products/shiny-server:/data
-      - /opt/repositories/vm024-dev/data-products-ui/shiny-server:/srv/shiny-server
+      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/shiny-server:/srv/shiny-server
     restart: unless-stopped 

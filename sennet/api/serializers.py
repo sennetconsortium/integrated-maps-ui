@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
-from data_products.models import *
+from integrated_maps.models import *
 import urllib.request, json 
 
 class TissueSerializer(serializers.Serializer):

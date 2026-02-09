@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .serializers import *
-from data_products.models import *
+from integrated_maps.models import *
 
 
 def data_product_list(request):

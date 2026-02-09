@@ -1,7 +1,7 @@
-{% extends "data_products/base.html" %}
+{% extends "integrated_maps/base.html" %}
 {% block nav %}
 <div class="topnav">
-  <a id="logo" href="https://hubmapconsortium.org" title="HuBMAP Consortium" data-height="50" data-padding="50"><img class="logo-main scale-with-grid" src="https://hubmapconsortium.org/wp-content/uploads/2023/03/hubmap-with-name-_medium@0.5x.png" height="46"></a>
+  <a id="logo" href="https://sennetconsortium.org" title="SenNet Consortium" data-height="50" data-padding="15"><img class="logo-main scale-with-grid" src="https://sennetconsortium.org/wp-content/uploads/2021/10/Untitled3.png" height="50"></a>
 <a href="{% url 'index' %}" style="font-family:'Arial'; font-size:30px; padding-top: 20px">Index</a>
 </div>
 {% endblock %}
@@ -14,7 +14,7 @@
   {% endif %}
 	<center>
 	  <br>
-	  <button type="button" class="collapsible">{{"Datasets in this Data Product"}}<span class="down-caret"></span></button>
+	  <button type="button" class="collapsible">{{"Datasets in this Integrated Map"}}<span class="down-caret"></span></button>
 <div class="content">
    <ul>{% for dataset in product.dataSets.all %}
     	<li><a href="https://portal.hubmapconsortium.org/browse/dataset/{{ dataset.uuid }}", style="font-family:'Arial'">{{ dataset.hbmid }}</a></li><br>
