@@ -1,5 +1,5 @@
 """
-ASGI config for data_products_ui project.
+ASGI config for integrated_maps_ui project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "data_products_ui.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "integrated_maps_ui.settings")
 
 application = get_asgi_application()

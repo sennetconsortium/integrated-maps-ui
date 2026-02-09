@@ -1,0 +1,9 @@
+{% extends "integrated_maps/detail.html" %}
+{% block links %}
+    <h2 style="font-family:'Arial'"; font-size:25px>{{ map.raw_total_cell_count }} Cells/Nuclei in Raw Integrated Map</h2>
+    {% if product.download %}
+    <p><a style="font-family:'Arial'" href="{{map.download}}/{{map.tissue.tissuecode}}.h5mu">Download Raw Integrated Map</a></p>
+    {% endif %}
+{% endblock %}
+{% block innercontent %}
+{% endblock %}

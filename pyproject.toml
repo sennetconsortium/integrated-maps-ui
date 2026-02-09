@@ -4,4 +4,4 @@ line-length = 99
 [tool.isort]
 profile = "black"
 multi_line_output = 3
-src_paths = ["data_products_ui", "data_products"]
+src_paths = ["integrated_maps_ui", "integrated_maps"]

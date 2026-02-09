@@ -1,22 +1,24 @@
-FROM sennet/data-products-ui-base:latest
+FROM sennet/integrated-maps-ui-base:latest
 
 RUN apt-get update \
  && apt-get -y install \
     uwsgi \
     uwsgi-plugin-python3 \
+    git \
+    vim \
  && rm -rf /var/cache/apt/*
 
-COPY sennet /opt/data-products-ui
+COPY sennet /opt/integrated-maps-ui
 COPY uwsgi /opt/uwsgi
 
-WORKDIR /opt/data-products-ui
-RUN mv data_products_ui/production_settings.py data_products_ui/local_settings.py
+WORKDIR /opt/integrated-maps-ui
+RUN mv integrated_maps_ui/production_settings.py integrated_maps_ui/local_settings.py
 RUN python3 -m compileall .
 RUN python3 -O -m compileall .
 
-ENV DJANGO_SETTINGS_MODULE data_products_ui.settings
+ENV DJANGO_SETTINGS_MODULE=integrated_maps_ui.settings
 
-VOLUME /opt/secret
+VOLUME /opt/integrated-maps-ui/secret
 
 EXPOSE 5000
 

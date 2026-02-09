@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
-from data_products.models import *
+from integrated_maps.models import *
 import urllib.request, json 
 
 class TissueSerializer(serializers.Serializer):
@@ -25,15 +25,15 @@ class AssaySerializer(serializers.ModelSerializer):
 
 class DatasetSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
+    sennet_id = serializers.SerializerMethodField()
     
-    def get_hubmap_id(self,obj):
-        return obj.hbmid
+    def get_sennet_id(self,obj):
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
-class DataProductSerializer(serializers.Serializer):
-    data_product_id = serializers.UUIDField(read_only=True)
+class IntegratedMapSerializer(serializers.Serializer):
+    integrated_map_id = serializers.UUIDField(read_only=True)
     creation_time = serializers.DateTimeField(read_only=True)
     tissue = TissueSerializer(read_only=True, many=False)
     dataSets = DatasetSerializer(read_only=True, many=True)
@@ -44,7 +44,7 @@ class DataProductSerializer(serializers.Serializer):
     def get_download(self, obj):
         if obj.download is not None:
             if obj.assay.assayName == "rna-seq":
-                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             elif obj.assay.assayName =="multiome-rna-atac":
                 return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             else:
@@ -60,7 +60,7 @@ class DataProductSerializer(serializers.Serializer):
             elif obj.assay.assayName == "atac":
                 return obj.download+"/"+obj.tissue.tissuecode+".h5mu"
             else:
-                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5mu"
         else:
             return "None"
 
@@ -71,10 +71,10 @@ class DataProductSerializer(serializers.Serializer):
 
 class DatasetMappingSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
-    dataproduct_set = DataProductSerializer(many=True, read_only=True)
+    sennet_id = serializers.SerializerMethodField()
+    integratedmap_set = IntegratedMapSerializer(many=True, read_only=True)
     
-    def get_hubmap_id(self,obj):
-        return obj.hbmid
+    def get_sennet_id(self,obj):
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)

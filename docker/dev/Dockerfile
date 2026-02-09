@@ -1,4 +1,4 @@
-FROM sennet/data-products-ui-base
+FROM sennet/integrated-maps-ui-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -14,5 +14,5 @@ RUN . /opt/venv/bin/activate \
  && python -m pip install -r /opt/requirements-dev.txt \
  && rm -rf /root/.cache/pip
 
-ENV DJANGO_SETTINGS_MODULE=data_products_ui.settings
+ENV DJANGO_SETTINGS_MODULE=integrate_maps_ui.settings
 ENV PYTHONPATH=/code

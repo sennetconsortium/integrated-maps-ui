@@ -1,0 +1,73 @@
+{% extends "integrated_maps/base.html" %}
+{% block nav %}
+<div class="topnav">
+  <a id="logo" href="https://sennetconsortium.org" title="SenNet Consortium" data-height="50" data-padding="15"><img class="logo-main scale-with-grid" src="https://sennetconsortium.org/wp-content/uploads/2021/10/Untitled3.png" height="50"></a>
+
+</div>
+{% endblock %}
+{% block content %}
+	   <p>SenNet-wide integrated maps contain consolidated data for all datasets of a particular assay type and tissue, across all datasets, assay variants, and data providers. RNA-seq integrated maps are added as both raw and processed versions: 'raw' features gene expression count matrices from the SenNet RNA-seq pipeline, and 'processed' versions are the results of secondary analysis (normalization, filtering, dimensionality reduction, clustering) applied to the raw matrix.</p>
+    {% if latest_integrated_map_list %}
+    <table class="center">
+    <th>Tissue Type</th><th>Creation Time</th><th>Assay Type</th><th>Organism</th><th>Number of Datasets</th><th>Total Raw Cells</th><th>Total Processed Cells</th><th>Number Processed Cell Types</th><th>Raw Integrated Map Download</th><th>Processed Integrated Map Download</th><th>Shiny App</th><th>(All Versions)</th>
+    {% for IntegratedMap in latest_integrated_map_list %}
+    <tr>
+        <td>{% if IntegratedMap.tissue.tissuetype == "Knee (Left)" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-knee.svg" height="20"/>
+		{% elif IntegratedMap.tissue.tissuetype == "Knee (Right)" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-knee.svg" height="20"/>
+		{% elif IntegratedMap.tissue.tissuetype == "Lung (Left)"  or IntegratedMap.tissue.tissuetype == "Lung (Right)" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-lung.svg" height="20"/>
+		{% elif IntegratedMap.tissue.tissuetype == "Kidney (Left)" or IntegratedMap.tissue.tissuetype == "Kidney (Right)" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-kidney.svg" height="20"/>
+		{% elif IntegratedMap.tissue.tissuetype == "Fallopian Tube (Left)" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-fallopian-tube-left.svg" height=20/>
+		{% elif IntegratedMap.tissue.tissuetype == "Fallopian Tube (Right)" %}
+                <img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-fallopian-tube-right.svg" height=20/>
+                {% elif IntegratedMap.tissue.tissuetype == "Ovary (Left)" %}
+                <img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-ovary-left.svg" height=20/>
+                {% elif IntegratedMap.tissue.tissuetype == "Ovary (Right)" %}
+                <img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-ovary-right.svg" height=20/>
+		{% elif IntegratedMap.tissue.tissuetype == "Large Intestine" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-large-intestine.svg" height=20/>
+		{% elif IntegratedMap.tissue.tissuetype == "Lymph Node" %}
+		<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-lymph-nodes.svg" height=20/>
+		{% else %}
+	<img src="https://cdn.jsdelivr.net/gh/cns-iu/md-icons@main/other-icons/organs/ico-organs-{{ IntegratedMap.tissue|lower }}.svg" height="20"/>{% endif %}
+	<a href="/integrated_maps/{{ IntegratedMap.integrated_map_id }}/">{{ IntegratedMap.tissue }}</a></td>
+    <td><a href="/integrated_maps/{{ IntegratedMap.integrated_map_id }}/">{{ IntegratedMap.creation_time }}</a></td>
+	<td>{{IntegratedMap.assay}}</td>
+    <td>{{IntegratedMap.organism}}</td>
+	<td>{{IntegratedMap.dataSets.all | length}}</td>
+	<td>{{IntegratedMap.raw_total_cell_count}}</td>
+	<td>{{IntegratedMap.processed_total_cell_count}}</td>
+	<td>{% if IntegratedMap.processed_cell_type_counts %}
+	{{IntegratedMap.processed_cell_type_counts.items | length }}
+	{% else %} NA 
+	{% endif %}</td>
+	<td>{% if IntegratedMap.assay.assayName == "atac" %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode}}.h5mu">Raw h5mu</a>
+	{% elif IntegratedMap.assay.assayName == "multiome-rna-atac" %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode}}_raw.h5mu">Raw h5mu</a>
+	{% elif IntegratedMap.assay.assayName == "codex" %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode}}_raw.h5mu">Raw h5mu</a>
+	{% else %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_raw.h5mu">Raw h5mu</a>
+	{% endif %}</td>
+	<td>{% if IntegratedMap.assay.assayName == "rna-seq" %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_processed.h5mu">Processed h5mu</a>
+	{% elif IntegratedMap.assay.assayName == "multiome-rna-atac" %}
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_processed.h5mu">Processed h5mu</a>
+	{% endif %}</td>
+	<td>{% if IntegratedMap.shiny_app %}
+	<a href = {{IntegratedMap.shiny_app}}>Shiny App</a>
+	{% else %} NA
+	{% endif %}</td>
+	<td><a href="/integrated_maps/{{ IntegratedMap.tissue }}">All versions of {{IntegratedMap.tissue}}</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No integrated maps are available.</p>
+{% endif %}
+{% endblock %}

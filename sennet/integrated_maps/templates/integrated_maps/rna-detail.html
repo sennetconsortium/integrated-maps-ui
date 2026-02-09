@@ -1,0 +1,30 @@
+{% extends "integrated_maps/detail.html" %}
+{% block links %}
+    <h2 style="font-family:'Arial'"; font-size:25px>{{ map.processed_total_cell_count }} Cells/Nuclei in Processed Integrated Map</h2>
+    {% if map.download %}
+	{% if map.assay.assayName == "rna-seq" %}
+    	<p><a style="font-family:'Arial'" href="{{map.download}}/{{map.tissue.tissuecode}}_raw.h5ad">Download Raw Integrated Map</a>
+    	<a style="font-family:'Arial'" href="{{map.download}}/{{map.tissue.tissuecode}}_processed.h5ad">Download Processed Integrated Map</a></p>
+    	{% else %}
+	<p><a style="font-family:'Arial'" href="{{map.download}}/{{map.tissue.tissuecode}}_raw.h5mu">Download Raw Integrated Map</a>
+	<a style="font-family:'Arial'" href="{{map.download}}/{{map.tissue.tissuecode}}_processed.h5mu">Download Processed Integrated Map</a></p>
+	{% endif %}
+    {% endif %}
+    {% if map.shiny_app %}
+    <p><a style="font-family:'Arial'" href="{{map.shiny_app}}">Shiny App</a></p>
+    {% endif %}
+{% endblock %}
+{% block innercontent %}
+<center>
+{% if map.processed_cell_type_counts %}
+	<br><br><button type="button" class="collapsible">{{"Processed Cell Types"}}<span class="down-caret"></span></button>
+	      <div class="content">
+      <table>
+      {% for key, value in map.processed_cell_type_counts.items %}
+        <tr><td><a style="font-family:'Arial'">{{ key }}</a></td>
+            <td><a style="font-family:'Arial'">{{value}}</a></td></tr>
+      {% endfor %}
+      </table>
+    {% endif %}
+</center>
+{% endblock %}
