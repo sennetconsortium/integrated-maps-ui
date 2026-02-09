@@ -18,7 +18,7 @@ def summary_default():
 class Dataset(models.Model):
 
     uuid = models.CharField(max_length=32)
-    hbmid = models.CharField(max_length=16)
+    sntid = models.CharField(max_length=16)
 
     annotation_metadata = models.JSONField(default=annotation_default)
 

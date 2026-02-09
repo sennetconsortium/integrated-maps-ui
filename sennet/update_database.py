@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 def change_dataset_mapping():
-    datasets = Dataset.objects.order_by("hbmid")
+    datasets = Dataset.objects.order_by("sntid")
     for ds in datasets:
         data_prod = ds.data_product
         data_prod.dataSets.add(ds)
