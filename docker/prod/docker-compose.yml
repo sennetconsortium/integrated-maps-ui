@@ -38,7 +38,7 @@ services:
       - sennet-uwsgi
       - sennet-shinycell2
   sennet-shinycell2:
-    image: "sennet-shinycell2:latest"
+    image: "shinycell2:latest"
     ports:
       - "3839:3839"
     volumes:
