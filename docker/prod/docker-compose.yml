@@ -33,7 +33,7 @@ services:
       - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
     ports:
       - "81:81"
-      - "443:4431"
+      - "444:4431"
     depends_on:
       - sennet-uwsgi
       - sennet-shinycell2
