@@ -8,40 +8,40 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5434:5434"
+      - "5432:5432"
     volumes:
-      -  /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/data/postgres:/var/lib/postgresql/data
+      -  /opt/data/postgres:/var/lib/postgresql/data
   sennet-uwsgi:
     image: "sennet/integrated-maps-ui-prod:latest"
     ports:
-      - "5001:5001"
+      - "5000:5000"
     expose:
-      - 5001
+      - 5000
     volumes:
-      - /opt/repositories/vm024-dev/data-products-ui/secret:/opt/secret/
-      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/data:/opt/data/
-      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/pipeline_outputs:/opt/pipeline_outputs/
-      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/media:/opt/media/
+      - /opt/integrated-maps-ui/secret:/opt/integrated-maps-ui/secret/
+      - /opt/data:/opt/data/
+      - /opt/pipeline_outputs:/opt/pipeline_outputs/
+      - /opt/media:/opt/media/
   sennet-nginx:
     image: "nginx:alpine"
     volumes:
-      - /opt/repositories/vm024-dev/data-products-ui/secret/nginx.conf:/etc/nginx/nginx.conf
-      - /opt/repositories/vm024-dev/data-products-ui/secret/data-products-ui.conf:/etc/nginx/conf.d/data-products-ui.conf
+      - /opt/integrated-maps-ui/secret/nginx.conf:/etc/nginx/nginx.conf
+      - /opt/integrated-maps-ui/secret/integrated-maps-ui.conf:/etc/nginx/conf.d/integrated-maps-ui.conf
       - /etc/pki/nginx:/etc/pki/nginx/
       - /etc/pki/tls:/etc/pki/tls/
-      - /opt/repositories/vm024-dev/data-products-ui/media:/opt/media/
-      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
+      - /opt/media/media:/opt/media/
+      - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
     ports:
-      - "81:81"
-      - "444:4431"
+      - "80:80"
+      - "442:4420"
     depends_on:
       - sennet-uwsgi
       - sennet-shinycell2
   sennet-shinycell2:
     image: "shinycell2:latest"
     ports:
-      - "3839:3839"
+      - "3838:3838"
     volumes:
-      - /hive/hubmap/data/public/hubmap-data-products/shiny-server:/data
-      - /opt/repositories/vm024-dev/data-products-ui/integrated-maps-ui/shiny-server:/srv/shiny-server
+      - /opt/shiny-server:/data
+      - /opt/shiny-server/shiny-server:/srv/shiny-server
     restart: unless-stopped 

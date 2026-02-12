@@ -73,7 +73,6 @@ class DataProduct(models.Model):
     raw_total_cell_count = models.PositiveIntegerField(null=True, blank=True)
     processed_total_cell_count = models.PositiveIntegerField(null=True, blank=True)
     processed_cell_type_counts = models.JSONField(blank=True)
-    raw_cell_type_counts = models.JSONField(blank=True)
     raw_file_size_bytes = models.PositiveBigIntegerField(blank=True)
     processed_file_sizes_bytes = models.PositiveBigIntegerField(blank=True)
     assay = models.ForeignKey(Assay, on_delete=models.CASCADE, default=Assay.get_default_pk)
@@ -86,7 +85,3 @@ class DataProduct(models.Model):
 
     def __str__(self):
         return "%s" % self.data_product_id
-
-    # def __str__(self):
-    #     datasets_str = ", ".join([str(dataset) for dataset in self.datasets.all()])
-    #     return f"{self.data_product_id} (Datasets: {datasets_str})"

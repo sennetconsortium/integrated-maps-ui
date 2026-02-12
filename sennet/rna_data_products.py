@@ -22,12 +22,12 @@ def get_tissue(tissue_yaml, tissue):
     return tissue_name
 
 
-def register_datasets(uuids, hbmids):
+def register_datasets(uuids, sntids):
     datasets = []
-    for dataset_uuid, dataset_hbmid in zip(uuids, hbmids):
+    for dataset_uuid, dataset_sntid in zip(uuids, sntids):
         dataset = Dataset.objects.get_or_create(
             uuid = dataset_uuid,
-            hbmid = dataset_hbmid
+            sntid = dataset_sntid
         )[0]
         dataset.save()
         datasets.append(dataset)
@@ -55,8 +55,8 @@ def register_data_product(metadata_file, umap_file):
     dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
-    directory_url = f"https://g-24f5cc.09193a.5898.dn.glob.us/public/hubmap-data-products/{data_product_uuid}"
-    shiny_url = f"https://data-products.hubmapconsortium.org/shiny/{data_product_uuid}/"
+    directory_url = f"https://sen-data-products.s3.amazonaws.com/{data_product_uuid}"
+    shiny_url = f"https://.sn-integrated-mapping.sennetconsortium.org/shiny/{data_product_uuid}/"
     processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
@@ -69,7 +69,6 @@ def register_data_product(metadata_file, umap_file):
         raw_total_cell_count = raw_cell_count,
         processed_total_cell_count = processed_cell_count,
         shiny_app = shiny_url,
-        raw_cell_type_counts = {},
         processed_cell_type_counts = processed_cell_types_counts,
         raw_file_size_bytes = raw_file_size,
         processed_file_sizes_bytes = processed_file_size,

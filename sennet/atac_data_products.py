@@ -28,12 +28,12 @@ def get_tissue(tissue_yaml, tissue):
     return tissue_name
 
 
-def register_datasets(uuids, hbmids):
+def register_datasets(uuids, sntids):
     datasets = []
-    for dataset_uuid, dataset_hbmid in zip(uuids, hbmids):
+    for dataset_uuid, dataset_sntid in zip(uuids, sntids):
         dataset = Dataset.objects.get_or_create(
             uuid = dataset_uuid,
-            hbmid = dataset_hbmid
+            sntid = dataset_sntid
         )[0]
         dataset.save()
         datasets.append(dataset)
@@ -51,10 +51,10 @@ def register_data_product(metadata_file):
     data_product_uuid = metadata["Data Product UUID"]
     tissue_type = metadata["Tissue"]
     dataset_uuids = metadata["Dataset UUIDs"]
-    dataset_hbmids = metadata["Dataset HBMIDs"]
-    dataset_list = register_datasets(dataset_uuids, dataset_hbmids)
+    dataset_sntids = metadata["Dataset SNTIDs"]
+    dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Total Cell Count"]
-    directory_url = f"https://g-24f5cc.09193a.5898.dn.glob.us/public/hubmap-data-products/{data_product_uuid}"
+    directory_url = f"https://sen-data-products.s3.amazonaws.com/{data_product_uuid}"
     raw_file_size = metadata["Raw File Size"]
     data_product = DataProduct.objects.get_or_create(
         data_product_id = data_product_uuid,
@@ -62,7 +62,6 @@ def register_data_product(metadata_file):
         download = directory_url,
         raw_total_cell_count = raw_cell_count,
         processed_total_cell_count = 0,
-        raw_cell_type_counts = {},
         processed_cell_type_counts = {},
         processed_file_sizes_bytes = 0,
         raw_file_size_bytes = raw_file_size,

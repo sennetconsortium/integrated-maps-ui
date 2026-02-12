@@ -51,11 +51,11 @@ def register_data_product(metadata_file, umap_file):
     data_product_uuid = metadata["Data Product UUID"]
     tissue_type = metadata["Tissue"]
     dataset_uuids = metadata["Dataset UUIDs"]
-    dataset_hbmids = metadata["Dataset HBMIDs"]
-    dataset_list = register_datasets(dataset_uuids, dataset_hbmids)
+    dataset_sntids = metadata["Dataset SNTIDs"]
+    dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
-    directory_url = f"https://g-24f5cc.09193a.5898.dn.glob.us/public/hubmap-data-products/{data_product_uuid}"
+    directory_url = f"https://sen-data-products.s3.amazonaws.com/{data_product_uuid}"
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
     data_product = DataProduct.objects.get_or_create(
@@ -64,7 +64,6 @@ def register_data_product(metadata_file, umap_file):
         assay = register_assay(),
         download = directory_url,
         umap_plot = umap_file ,
-        raw_cell_type_counts = {},
         processed_cell_type_counts = {},
         raw_total_cell_count = raw_cell_count,
         processed_total_cell_count = processed_cell_count,
