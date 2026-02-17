@@ -1,5 +1,5 @@
 # requires v0.5 or newer of 'multi-docker-build' package
-sennet/integrated-maps-ui-base  docker/base/Dockerfile
+sennet/integrated-maps-ui-base  docker/base/Dockerfile base_directory_build
 sennet/integrated-maps-ui-dev   docker/dev/Dockerfile
 # needs base directory build to copy code
 sennet/integrated-maps-ui-prod	docker/prod/Dockerfile	base_directory_build,write_git_json=sennet/version.json
