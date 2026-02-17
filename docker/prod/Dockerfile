@@ -1,4 +1,4 @@
-FROM sennet/data-products-ui-base:latest
+FROM sennet/integrated-maps-ui-base:latest
 
 RUN apt-get update \
  && apt-get -y install \

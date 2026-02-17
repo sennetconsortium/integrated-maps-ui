@@ -1,4 +1,4 @@
-FROM sennet/data-products-ui-base
+FROM sennet/integrated-maps-ui-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
