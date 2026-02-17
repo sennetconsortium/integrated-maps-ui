@@ -13,7 +13,7 @@ RUN apt-get update \
  && rm -rf /var/cache/apt/*
 
 ## Python packages
-COPY ./requirements.txt /opt/requirements.txt
+COPY requirements.txt /opt/requirements.txt
 COPY data /opt
 RUN python3 -m venv /opt/venv \
  && . /opt/venv/bin/activate \
