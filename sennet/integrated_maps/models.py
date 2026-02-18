@@ -59,6 +59,20 @@ class Assay(models.Model):
         return "%s" % self.assayName
 
 
+class Organism(models.Model):
+    organismName=models.CharField(max_length=32)
+    @classmethod
+    def get_default_pk(cls):
+        organism, created = cls.objects.get_or_create(
+            organismName = "human"
+        )
+        return organism.pk
+    def __repr__(self):
+        return self.organismName
+    def __str__(self):
+        return "%s" % self.organismName
+
+
 class DataProduct(models.Model):
 
     data_product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -76,6 +90,7 @@ class DataProduct(models.Model):
     raw_file_size_bytes = models.PositiveBigIntegerField(blank=True)
     processed_file_sizes_bytes = models.PositiveBigIntegerField(blank=True)
     assay = models.ForeignKey(Assay, on_delete=models.CASCADE, default=Assay.get_default_pk)
+    organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=Organism.get_default_pk)
 
     #link to this data product's shiny app
     shiny_app = models.URLField(null=True, blank=True)
