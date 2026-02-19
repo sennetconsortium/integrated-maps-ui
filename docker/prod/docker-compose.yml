@@ -31,6 +31,7 @@ services:
       - /etc/nginx/conf.d:/etc/nginx/conf.d
       - /opt/media/media:/opt/media/
       - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
+      - /opt/integrated-maps-ui/uwsgi:/opt/integrated-maps-ui/uwsgi
     ports:
       - "5080:5080"
       - "4433:4433"
