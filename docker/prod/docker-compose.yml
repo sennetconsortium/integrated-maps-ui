@@ -22,10 +22,11 @@ services:
       - /opt/data:/opt/data/
       - /opt/pipeline_outputs:/opt/pipeline_outputs/
       - /opt/media:/opt/media/
+      - /opt/integrated-maps-ui/uwsgi:/opt/integrated-maps-ui/uwsgi
   sennet-nginx:
     image: "nginx:alpine"
     volumes:
-      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/nginx/:/etc/nginx/
       - /opt/media/media:/opt/media/
       - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
     ports:
