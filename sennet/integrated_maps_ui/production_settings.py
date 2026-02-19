@@ -10,5 +10,5 @@ with open(SECRET_PATH / "django_secret_key.txt") as f:
     SECRET_KEY = f.read().strip()
 
 ALLOWED_HOSTS = [
-    "sn-integrated-mapping.dev.sennetconsortium.org",
+    "https://sn-integrated-mapping.dev.sennetconsortium.org/",
 ]

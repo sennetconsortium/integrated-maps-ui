@@ -144,7 +144,7 @@ REST_FRAMEWORK = {
 }
 
 VERSION_PATHS = [
-    Path("/opt/integrate-maps-ui/version.json"),
+    Path("/opt/integrated-maps-ui/version.json"),
     Path("/code/version.json"),
 ]
 
