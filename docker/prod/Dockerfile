@@ -18,7 +18,7 @@ RUN python3 -O -m compileall .
 
 ENV DJANGO_SETTINGS_MODULE=integrated_maps_ui.settings
 ENV PYTHONPATH=/code
-VOLUME /opt/secret
+VOLUME /opt/integrated-maps-ui/secret
 
 EXPOSE 5000
 
