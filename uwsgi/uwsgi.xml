@@ -12,3 +12,4 @@
 	<env>LANG=en_US.UTF-8</env>
 	<env>PYTHONIOENCODING=utf-8</env>
 </uwsgi>
+;
