@@ -26,7 +26,7 @@ services:
   sennet-nginx:
     image: "nginx:alpine"
     volumes:
-      - /etc/nginx/:/etc/nginx/
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /opt/media/media:/opt/media/
       - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
     ports:
