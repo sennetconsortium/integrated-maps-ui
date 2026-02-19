@@ -23,6 +23,8 @@ services:
       - /opt/pipeline_outputs:/opt/pipeline_outputs/
       - /opt/media:/opt/media/
       - /opt/integrated-maps-ui/uwsgi:/opt/integrated-maps-ui/uwsgi
+    depends_on:
+      - sennet-shinycell2
   sennet-nginx:
     image: "nginx:alpine"
     volumes:
