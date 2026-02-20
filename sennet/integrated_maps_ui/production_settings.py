@@ -13,5 +13,6 @@ ALLOWED_HOSTS = [
     "https://sn-integrated-mapping.dev.sennetconsortium.org/",
     "sn-integrated-mapping.dev.sennetconsortium.org/",
     "sn-integrated-mapping.sennetconsortium.org/",
-    "https://sn-integrated-mapping.sennetconsortium.org/"
+    "https://sn-integrated-mapping.sennetconsortium.org/",
+    "sn-integrated-mapping.dev.sennetconsortium.org",
 ]
