@@ -32,7 +32,7 @@ services:
       - /opt/media/media:/opt/media/
       - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
     ports:
-      - "5080:5080"
+      - "80:80"
       - "443:443"
     depends_on:
       - sennet-uwsgi
