@@ -22,7 +22,6 @@ services:
       - /opt/data:/opt/data/
       - /opt/pipeline_outputs:/opt/pipeline_outputs/
       - /opt/media:/opt/media/
-      - /opt/integrated-maps-ui/uwsgi:/opt/integrated-maps-ui/uwsgi
   sennet-shinycell2:
     image: "sennet/integrated-maps-ui-shinycell:latest"
     ports:
