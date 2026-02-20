@@ -46,22 +46,22 @@ def register_assay():
     return assay
 
 
-def register_data_product(metadata_file, umap_file):
+def register_integrated_map(metadata_file, umap_file):
     metadata = read_metadata(metadata_file)
-    data_product_uuid = metadata["Data Product UUID"]
+    integrated_map_uuid = metadata["Data Product UUID"]
     tissue_type = metadata["Tissue"]
     dataset_uuids = metadata["Dataset UUIDs"]
     dataset_sntids = metadata["Dataset SNTIDs"]
     dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
-    directory_url = f"https://sen-data-products.s3.amazonaws.com/{data_product_uuid}"
-    shiny_url = f"https://.sn-integrated-mapping.sennetconsortium.org/shiny/{data_product_uuid}/"
+    directory_url = f"https://sen-data-products.s3.amazonaws.com/{integrated_map_uuid}"
+    shiny_url = f"https://.sn-integrated-mapping.sennetconsortium.org/shiny/{integrated_map_uuid}/"
     processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
-    data_product = DataProduct.objects.get_or_create(
-        data_product_id = data_product_uuid,
+    integrated_map = IntegratedMap.objects.get_or_create(
+        integrated_map_id = integrated_map_uuid,
         tissue = register_tissue(tissue_type),
         assay = register_assay(),
         download = directory_url,
@@ -73,14 +73,14 @@ def register_data_product(metadata_file, umap_file):
         raw_file_size_bytes = raw_file_size,
         processed_file_sizes_bytes = processed_file_size,
     )[0]
-    data_product.save()
-    data_product.dataSets.add(*dataset_list)
-    data_product.save()
+    integrated_map.save()
+    integrated_map.dataSets.add(*dataset_list)
+    integrated_map.save()
 
 
-def register_data_products(metadata_list, umap_list):
+def register_integrated_maps(metadata_list, umap_list):
     for metadata, umap in zip(metadata_list, umap_list):
-        register_data_product(metadata, umap)
+        register_integrated_map(metadata, umap)
 
 
 def read_metadata(metadata_file):
@@ -138,7 +138,7 @@ def main(directory):
     metadata_files = find_metadatas(directory)
     umap_files = find_umaps(metadata_files, directory)
     updated_umap_files = copy_umaps(umap_files)
-    register_data_products(metadata_files, updated_umap_files)
+    register_integrated_maps(metadata_files, updated_umap_files)
     for file in metadata_files:
         delete_json_file(file)
 

@@ -73,9 +73,9 @@ class Organism(models.Model):
         return "%s" % self.organismName
 
 
-class DataProduct(models.Model):
+class IntegratedMap(models.Model):
 
-    data_product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    integrated_map_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     creation_time = models.DateTimeField(auto_now_add=True)
     tissue = models.ForeignKey(Tissue, on_delete=models.CASCADE)
@@ -92,11 +92,11 @@ class DataProduct(models.Model):
     assay = models.ForeignKey(Assay, on_delete=models.CASCADE, default=Assay.get_default_pk)
     organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=Organism.get_default_pk)
 
-    #link to this data product's shiny app
+    #link to this integrated map's shiny app
     shiny_app = models.URLField(null=True, blank=True)
 
     def __repr__(self):
-        return self.data_product_id
+        return self.integrated_map_product_id
 
     def __str__(self):
-        return "%s" % self.data_product_id
+        return "%s" % self.integrated_map_product_id
