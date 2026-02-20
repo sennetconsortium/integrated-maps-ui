@@ -14,11 +14,11 @@ from .serializers import *
 from integrated_maps.models import *
 
 
-def data_product_list(request):
+def integrated_map_list(request):
 
     if request.method == 'GET':
-        dataproducts = DataProduct.objects.all()
-        serializer = DataProductSerializer(dataproducts, many=True)
+        IntegratedMaps = IntegratedMap.objects.all()
+        serializer = IntegratedMapSerializer(IntegratedMaps, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 def tissue_list(request):
@@ -44,15 +44,15 @@ def assay_list(request):
         return JsonResponse(serializer.data, safe=False)
 
 
-def data_product_detail(request, data_product_id):
+def integrated_map_detail(request, integrated_map_id):
 
     try:
-        product = DataProduct.objects.get(data_product_id=data_product_id)
-    except DataProduct.DoesNotExist:
+        product = IntegratedMap.objects.get(integrated_map_id=integrated_map_id)
+    except IntegratedMap.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = DataProductSerializer(product)
+        serializer = IntegratedMapSerializer(product)
         return JsonResponse(serializer.data)
 
 
@@ -105,29 +105,29 @@ def status_view(request):
     return JsonResponse(status_data)
 
 
-def data_products_by_tissue(request, tissuetype):
+def integrated_maps_by_tissue(request, tissuetype):
     if request.method != 'GET':
         return HttpResponse(status=405)
 
     try:
         tissue = Tissue.objects.get(tissuetype__iexact=tissuetype)
-        data_products = DataProduct.objects.filter(tissue=tissue)
+        integrated_maps = IntegratedMap.objects.filter(tissue=tissue)
     except Tissue.DoesNotExist:
         return HttpResponse(status=404)
 
-    serializer = DataProductSerializer(data_products, many=True)
+    serializer = IntegratedMapSerializer(integrated_maps, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 
-def data_products_by_assay(request, assayName):
+def integrated_maps_by_assay(request, assayName):
     if request.method != 'GET':
         return HttpResponse(status=405)
 
     try:
         assay = Assay.objects.get(assayName__iexact=assayName)
-        data_products = DataProduct.objects.filter(assay=assay)
+        integrated_maps = IntegratedMap.objects.filter(assay=assay)
     except Assay.DoesNotExist:
         return HttpResponse(status=404)
 
-    serializer = DataProductSerializer(data_products, many=True)
+    serializer = IntegratedMapSerializer(integrated_maps, many=True)
     return JsonResponse(serializer.data, safe=False)

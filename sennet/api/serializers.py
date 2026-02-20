@@ -25,15 +25,15 @@ class AssaySerializer(serializers.ModelSerializer):
 
 class DatasetSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
+    sennet_id = serializers.SerializerMethodField()
     
-    def get_hubmap_id(self,obj):
+    def get_sennet_id(self,obj):
         return obj.hbmid
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
-class DataProductSerializer(serializers.Serializer):
-    data_product_id = serializers.UUIDField(read_only=True)
+class IntegratedMapSerializer(serializers.Serializer):
+    integrated_map_id = serializers.UUIDField(read_only=True)
     creation_time = serializers.DateTimeField(read_only=True)
     tissue = TissueSerializer(read_only=True, many=False)
     dataSets = DatasetSerializer(read_only=True, many=True)
@@ -71,10 +71,10 @@ class DataProductSerializer(serializers.Serializer):
 
 class DatasetMappingSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
-    dataproduct_set = DataProductSerializer(many=True, read_only=True)
+    sennet_id = serializers.SerializerMethodField()
+    integratedmap_set = IntegratedMapSerializer(many=True, read_only=True)
     
-    def get_hubmap_id(self,obj):
+    def get_sennet_id(self,obj):
         return obj.hbmid
         
     annotation_metadata = serializers.JSONField(read_only=True)
