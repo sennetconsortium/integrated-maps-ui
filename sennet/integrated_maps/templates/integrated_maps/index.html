@@ -9,7 +9,7 @@
 	   <p>SenNet-wide integrated maps contain consolidated data for all datasets of a particular assay type and tissue, across all datasets, assay variants, and data providers. RNA-seq integrated maps are added as both raw and processed versions: 'raw' features gene expression count matrices from the SenNet RNA-seq pipeline, and 'processed' versions are the results of secondary analysis (normalization, filtering, dimensionality reduction, clustering) applied to the raw matrix.</p>
     {% if latest_integrated_map_list %}
     <table class="center">
-    <th>Tissue Type</th><th>Creation Time</th><th>Assay Type</th><th>Number of Datasets</th><th>Total Raw Cells</th><th>Total Processed Cells</th><th>Number Processed Cell Types</th><th>Raw Integrated Map Download</th><th>Processed Integrated Map Download</th><th>Shiny App</th><th>(All Versions)</th>
+    <th>Tissue Type</th><th>Creation Time</th><th>Assay Type</th><th>Organism</th><th>Number of Datasets</th><th>Total Raw Cells</th><th>Total Processed Cells</th><th>Number Processed Cell Types</th><th>Raw Integrated Map Download</th><th>Processed Integrated Map Download</th><th>Shiny App</th><th>(All Versions)</th>
     {% for IntegratedMap in latest_integrated_map_list %}
     <tr>
         <td>{% if IntegratedMap.tissue.tissuetype == "Knee (Left)" %}
