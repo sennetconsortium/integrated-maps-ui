@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import shutil
 import yaml
-from integrated_maps.models import DataProduct, Tissue, Assay, Dataset
+from integrated_maps.models import IntegratedMap, Tissue, Assay, Dataset
 from argparse import ArgumentParser
 from pathlib import Path
 
