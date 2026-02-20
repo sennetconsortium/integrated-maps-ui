@@ -55,7 +55,7 @@ def register_integrated_map(metadata_file, umap_file):
     dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
-    directory_url = f"https://sen-data-products.s3.amazonaws.com/{integrated_map_uuid}"
+    directory_url = f"https://sn-data-products.s3.amazonaws.com/{integrated_map_uuid}"
     shiny_url = f"https://.sn-integrated-mapping.sennetconsortium.org/shiny/{integrated_map_uuid}/"
     processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     raw_file_size = metadata["Raw File Size"]
