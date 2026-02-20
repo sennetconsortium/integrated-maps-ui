@@ -52,10 +52,10 @@
 	{% elif IntegratedMap.assay.assayName == "codex" %}
 	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode}}_raw.h5mu">Raw h5mu</a>
 	{% else %}
-	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_raw.h5ad">Raw H5AD</a>
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_raw.h5mu">Raw h5mu</a>
 	{% endif %}</td>
 	<td>{% if IntegratedMap.assay.assayName == "rna-seq" %}
-	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_processed.h5ad">Processed H5AD</a>
+	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_processed.h5mu">Processed h5mu</a>
 	{% elif IntegratedMap.assay.assayName == "multiome-rna-atac" %}
 	<a href="{{ IntegratedMap.download }}/{{ IntegratedMap.tissue.tissuecode }}_processed.h5mu">Processed h5mu</a>
 	{% endif %}</td>
