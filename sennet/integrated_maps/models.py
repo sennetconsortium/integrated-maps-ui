@@ -96,7 +96,7 @@ class IntegratedMap(models.Model):
     shiny_app = models.URLField(null=True, blank=True)
 
     def __repr__(self):
-        return self.integrated_map_product_id
+        return self.integrated_map_id
 
     def __str__(self):
-        return "%s" % self.integrated_map_product_id
+        return "%s" % self.integrated_map_id
