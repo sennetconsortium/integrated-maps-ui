@@ -23,20 +23,6 @@ services:
       - /opt/pipeline_outputs:/opt/pipeline_outputs/
       - /opt/media:/opt/media/
       - /opt/integrated-maps-ui/uwsgi:/opt/integrated-maps-ui/uwsgi
-  sennet-nginx:
-    image: "nginx:alpine"
-    volumes:
-      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /etc/letsencrypt:/etc/letsencrypt
-      - /etc/nginx/conf.d:/etc/nginx/conf.d
-      - /opt/media/media:/opt/media/
-      - /opt/integrated-maps-ui/sennet/static/:/opt/integrated-maps-ui/sennet/static/
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - sennet-uwsgi
-      - sennet-shinycell2
   sennet-shinycell2:
     image: "sennet/integrated-maps-ui-shinycell:latest"
     ports:
