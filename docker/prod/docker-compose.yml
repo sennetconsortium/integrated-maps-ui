@@ -21,7 +21,7 @@ services:
       - /opt/integrated-maps-ui/secret:/opt/integrated-maps-ui/secret/
       - /opt/data:/opt/data/
       - /opt/pipeline_outputs:/opt/pipeline_outputs/
-      - /opt/media:/opt/media/
+      - /opt/media:/opt/integrated-maps-ui/media
   sennet-shinycell2:
     image: "sennet/integrated-maps-ui-shinycell:latest"
     ports:
