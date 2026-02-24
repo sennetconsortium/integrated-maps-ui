@@ -11,7 +11,7 @@ from . import views
 #router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    path("/integrated_maps/", views.index, name="index"),
+    path("", views.index, name="index"),
     path("admin/", admin.site.urls),
     path("integrated_maps/", include("integrated_maps.urls")),
     path("api/", include("api.urls")),
