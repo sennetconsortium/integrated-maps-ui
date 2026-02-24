@@ -14,7 +14,7 @@ def set_access_keys(access_key_id, secret_access_key):
 def download_s3_file(file, uuid):
     bucket_path = f"s3://sn-data-products/{uuid}/"
     os.system(
-        f'aws s3 cp "{bucket_path}{file.name}" /opt/pipeline_outputs/"{file}"'
+        f'aws s3 cp "{bucket_path}{file}" /opt/pipeline_outputs/"{file}"'
     )
 
 
