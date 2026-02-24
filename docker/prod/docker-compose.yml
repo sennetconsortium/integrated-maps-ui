@@ -27,6 +27,5 @@ services:
     ports:
       - "3838:3838"
     volumes:
-      - /opt/shiny-server:/data
-      - /opt/shiny-server/shiny-server:/srv/shiny-server
+      - /opt/shiny-server:/srv/shiny-server
     restart: unless-stopped 
