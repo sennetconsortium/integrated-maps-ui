@@ -25,7 +25,7 @@ def download_s3_files(file_list, uuid):
 
 def download_shiny(uuid):
     bucket_path = f"s3://sn-data-products/{uuid}/shiny/"
-    os.system(f'aws s3 cp "{bucket_path}" "/opt/shiny_server/{uuid}/" --recursive')
+    os.system(f'aws s3 cp "{bucket_path}" "/opt/shiny-server/{uuid}/" --recursive')
 
 
 def get_uuid(metadata_json):
