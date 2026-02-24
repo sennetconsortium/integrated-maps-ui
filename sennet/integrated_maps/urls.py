@@ -6,7 +6,7 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path("/integrated_maps/", views.index, name="index"),
+    path("", views.index, name="index"),
     path("<uuid:integrated_map_id>/", views.detail, name="detail"),
     path("<str:tissuetype>/", views.tissue, name="tissue"),
     path("latest/<str:tissuecode>/<str:assayName>", views.detail_latest),
