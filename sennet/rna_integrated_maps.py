@@ -56,7 +56,7 @@ def register_integrated_map(metadata_file, umap_file):
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
     directory_url = f"https://sn-data-products.s3.amazonaws.com/{integrated_map_uuid}"
-    shiny_url = f"https://sn-integrated-mapping.sennetconsortium.org/shiny/{integrated_map_uuid}/"
+    shiny_url = f"https://sn-integrated-mapping.dev.sennetconsortium.org/shiny/{integrated_map_uuid}/"
     processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
@@ -111,7 +111,7 @@ def copy_umaps(umap_paths):
         filename = os.path.basename(umap)
         file = os.path.splitext(filename)
         png = f"{file[0]}.png"
-        shutil.copy(umap, f"/opt/integrated-maps-ui/{png}")
+        shutil.copy(umap, f"/opt/media/{png}")
         new_umap_path = png
         new_umap_paths.append(new_umap_path)
     return new_umap_paths
