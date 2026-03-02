@@ -28,7 +28,7 @@ class DatasetSerializer(serializers.Serializer):
     sennet_id = serializers.SerializerMethodField()
     
     def get_sennet_id(self,obj):
-        return obj.hbmid
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
@@ -75,6 +75,6 @@ class DatasetMappingSerializer(serializers.Serializer):
     integratedmap_set = IntegratedMapSerializer(many=True, read_only=True)
     
     def get_sennet_id(self,obj):
-        return obj.hbmid
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)
