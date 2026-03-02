@@ -44,7 +44,7 @@ class IntegratedMapSerializer(serializers.Serializer):
     def get_download(self, obj):
         if obj.download is not None:
             if obj.assay.assayName == "rna-seq":
-                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             elif obj.assay.assayName =="multiome-rna-atac":
                 return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             else:
@@ -60,7 +60,7 @@ class IntegratedMapSerializer(serializers.Serializer):
             elif obj.assay.assayName == "atac":
                 return obj.download+"/"+obj.tissue.tissuecode+".h5mu"
             else:
-                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5mu"
         else:
             return "None"
 
