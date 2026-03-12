@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import shutil
 import yaml
-from integrated_maps.models import DataProduct, Tissue, Assay, Dataset
+from integrated_maps.models import IntegratedMap, Tissue, Assay, Dataset
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -48,18 +48,18 @@ def register_assay():
 
 def register_integrated_map(metadata_file, umap_file):
     metadata = read_metadata(metadata_file)
-    data_product_uuid = metadata["Integrated Map UUID"]
+    map_uuid = metadata["Integrated Map UUID"]
     tissue_type = metadata["Tissue"]
     dataset_uuids = metadata["Dataset UUIDs"]
     dataset_sntids = metadata["Dataset SNTIDs"]
     dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
-    directory_url = f"https://sn-data-products.s3.amazonaws.com/{data_product_uuid}"
+    directory_url = f"https://sn-data-products.s3.amazonaws.com/{map_uuid}"
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
-    data_product = DataProduct.objects.get_or_create(
-        data_product_id = data_product_uuid,
+    map = IntegratedMap.objects.get_or_create(
+        integrated_map_id = map_uuid,
         tissue = register_tissue(tissue_type),
         assay = register_assay(),
         download = directory_url,
@@ -70,9 +70,9 @@ def register_integrated_map(metadata_file, umap_file):
         raw_file_size_bytes = raw_file_size,
         processed_file_sizes_bytes = processed_file_size,
     )[0]
-    data_product.save()
-    data_product.dataSets.add(*dataset_list)
-    data_product.save()
+    map.save()
+    map.dataSets.add(*dataset_list)
+    map.save()
 
 
 def register_integrated_maps(metadata_list, umap_list):
