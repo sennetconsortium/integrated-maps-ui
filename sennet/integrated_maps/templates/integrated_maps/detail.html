@@ -17,7 +17,7 @@
 	  <button type="button" class="collapsible">{{"Datasets in this Integrated Map"}}<span class="down-caret"></span></button>
 <div class="content">
    <ul>{% for dataset in map.dataSets.all %}
-    	<li><a href="https://portal.hubmapconsortium.org/browse/dataset/{{ dataset.uuid }}", style="font-family:'Arial'">{{ dataset.sntid }}</a></li><br>
+    	<li><a href="https://data.sennetconsortium.org/dataset?uuid={{ dataset.uuid }}", style="font-family:'Arial'">{{ dataset.sntid }}</a></li><br>
     {% endfor %}</ul>
     </div>
 	</center>
