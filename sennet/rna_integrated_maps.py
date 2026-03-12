@@ -48,7 +48,7 @@ def register_assay():
 
 def register_integrated_map(metadata_file, umap_file):
     metadata = read_metadata(metadata_file)
-    integrated_map_uuid = metadata["Data Product UUID"]
+    integrated_map_uuid = metadata["Integrated Map UUID"]
     tissue_type = metadata["Tissue"]
     dataset_uuids = metadata["Dataset UUIDs"]
     dataset_sntids = metadata["Dataset SNTIDs"]
