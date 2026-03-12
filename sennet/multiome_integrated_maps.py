@@ -27,7 +27,7 @@ def register_datasets(uuids, sntids):
     for dataset_uuid, dataset_sntid in zip(uuids, sntids):
         dataset = Dataset.objects.get_or_create(
             uuid = dataset_uuid,
-            hbmid = dataset_sntid
+            sntid = dataset_sntid
         )[0]
         dataset.save()
         datasets.append(dataset)
