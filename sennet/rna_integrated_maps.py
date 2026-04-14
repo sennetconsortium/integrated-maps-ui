@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import shutil
 import yaml
-from integrated_maps.models import IntegratedMap, Tissue, Assay, Dataset
+from integrated_maps.models import IntegratedMap, Tissue, Assay, Dataset, Organism
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -46,6 +46,12 @@ def register_assay():
     return assay
 
 
+def register_organism(organism):
+    organism = Organism.objects.get_or_create(organismName=organism)[0]
+    organism.save()
+    return organism
+
+
 def register_integrated_map(metadata_file, umap_file):
     metadata = read_metadata(metadata_file)
     integrated_map_uuid = metadata["Integrated Map UUID"]
@@ -60,10 +66,12 @@ def register_integrated_map(metadata_file, umap_file):
     processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
+    organism = metadata["Organism"]
     integrated_map = IntegratedMap.objects.get_or_create(
         integrated_map_id = integrated_map_uuid,
         tissue = register_tissue(tissue_type),
         assay = register_assay(),
+        organism = register_organism(organism),
         download = directory_url,
         umap_plot = umap_file ,
         raw_total_cell_count = raw_cell_count,
