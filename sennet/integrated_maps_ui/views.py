@@ -4,4 +4,4 @@ from django.template import loader
 
 def index(request):
 
-    return redirect("/integrated_maps/")
+    return redirect("https://data.sennetconsortium.org/discover/integrated-maps")
