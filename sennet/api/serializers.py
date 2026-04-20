@@ -32,20 +32,24 @@ class DatasetSerializer(serializers.Serializer):
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
-class OrganismSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Organism
-        fields = ['organismName']
-
 class IntegratedMapSerializer(serializers.Serializer):
     integrated_map_id = serializers.UUIDField(read_only=True)
     creation_time = serializers.DateTimeField(read_only=True)
     tissue = TissueSerializer(read_only=True, many=False)
-    organism = OrganismSerializer(read_only=True, many=False)
+    organism = serializers.CharField(read_only=True, many=False)
+    assay = serializers.charField(read_only=True, many=False
     dataSets = DatasetSerializer(read_only=True, many=True)
-    assay = AssaySerializer(required=True)
     shiny_app = serializers.URLField(read_only=True)  # Add this line
     download = serializers.SerializerMethodField()
+
+
+    def get_organism(self, obj):
+        return obj.organism
+
+
+    def _assay(self, obj):
+        return obj.assay
+
     
     def get_download(self, obj):
         if obj.download is not None:
@@ -57,8 +61,11 @@ class IntegratedMapSerializer(serializers.Serializer):
                 return "None"
         else:
             return "None"
-   
+
+
     download_raw = serializers.SerializerMethodField()
+
+
     def get_download_raw(self, obj):
         if obj.download is not None:
             if obj.assay.assayName == "multiome-rna-atac":
