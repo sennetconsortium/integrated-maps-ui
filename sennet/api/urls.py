@@ -19,4 +19,5 @@ urlpatterns = [
     path("datasets/<str:uuid>/", views.dataset_detail),
     path("integrated_maps/tissue/<str:tissuetype>/", views.integrated_maps_by_tissue),
     path("integrated_maps/assay/<str:assayName>/", views.integrated_maps_by_assay),
+    path("integrated_maps/organism/<str:organismName>/", views.integrated_maps_by_organism),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
