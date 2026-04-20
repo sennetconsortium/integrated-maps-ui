@@ -22,7 +22,6 @@ class AssaySerializer(serializers.ModelSerializer):
         model = Assay
         fields = ['assayName']
 
-
 class DatasetSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     sennet_id = serializers.SerializerMethodField()
@@ -32,10 +31,16 @@ class DatasetSerializer(serializers.Serializer):
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
+class OrganismSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organism
+        fields = ['organismName']
+
 class IntegratedMapSerializer(serializers.Serializer):
     integrated_map_id = serializers.UUIDField(read_only=True)
     creation_time = serializers.DateTimeField(read_only=True)
     tissue = TissueSerializer(read_only=True, many=False)
+    organism = OrganismSerializer(read_only=True, many=False)
     dataSets = DatasetSerializer(read_only=True, many=True)
     assay = AssaySerializer(required=True)
     shiny_app = serializers.URLField(read_only=True)  # Add this line
@@ -51,7 +56,7 @@ class IntegratedMapSerializer(serializers.Serializer):
                 return "None"
         else:
             return "None"
-   
+
     download_raw = serializers.SerializerMethodField()
     def get_download_raw(self, obj):
         if obj.download is not None:

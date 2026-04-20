@@ -131,3 +131,17 @@ def integrated_maps_by_assay(request, assayName):
 
     serializer = IntegratedMapSerializer(integrated_maps, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+
+def integrated_maps_by_organism(request, organismName):
+    if request.method != 'GET':
+        return HttpResponse(status=405)
+
+    try:
+        organism = Organism.objects.get(organismName__iexact=organismName)
+        integrated_maps = IntegratedMap.objects.filter(organism=organism)
+    except Organism.doesNotExist:
+        return HttpResponse(status=404)
+
+    serializer = IntegratedMapSerializer(integrated_maps, many=True)
+    return JsonResponse(serializer.data, safe=False)
