@@ -55,6 +55,7 @@ def register_integrated_map(metadata_file, umap_file):
     dataset_list = register_datasets(dataset_uuids, dataset_sntids)
     raw_cell_count = metadata["Raw Total Cell Count"]
     processed_cell_count = metadata["Processed Total Cell Count"]
+    processed_cell_types_counts = metadata["Processed Cell Type Counts"]
     directory_url = f"https://sn-data-products.s3.amazonaws.com/{map_uuid}"
     raw_file_size = metadata["Raw File Size"]
     processed_file_size = metadata["Processed File Size"]
@@ -64,7 +65,7 @@ def register_integrated_map(metadata_file, umap_file):
         assay = register_assay(),
         download = directory_url,
         umap_plot = umap_file ,
-        processed_cell_type_counts = {},
+        processed_cell_type_counts = processed_cell_types_counts,
         raw_total_cell_count = raw_cell_count,
         processed_total_cell_count = processed_cell_count,
         raw_file_size_bytes = raw_file_size,
