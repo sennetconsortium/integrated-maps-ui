@@ -2,30 +2,29 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 
-from .models import DataProduct, Tissue, Assay
+from .models import IntegratedMap, Tissue, Assay
 
 
 def index(request):
     tissue_list = Tissue.objects.order_by("tissuetype")
     assay_list = Assay.objects.order_by("assayName")
-    latest_data_product_list=[]
+    latest_integrated_map_list=[]
     for t in tissue_list:
         for a in assay_list:
-            latest_data_product_t=DataProduct.objects.filter(tissue=t, assay=a).order_by("-creation_time")
-            if(len(latest_data_product_t)>0):
-                latest_data_product_list.append(latest_data_product_t[0])
+            latest_integrated_map_t=IntegratedMap.objects.filter(tissue=t, assay=a).order_by("-creation_time")
+            if(len(latest_integrated_map_t)>0):
+                latest_integrated_map_list.append(latest_integrated_map_t[0])
     template = loader.get_template("integrated_maps/index.html")
     context = {
-        "latest_data_product_list": latest_data_product_list,
+        "latest_integrated_map_list": latest_integrated_map_list,
     }
     return HttpResponse(template.render(context, request))
 
 
-def detail(request, data_product_id):
-    # return HttpResponse("You're looking at dataProduct %s." % dataProductId)
+def detail(request, integrated_map_id):
+    map = get_object_or_404(IntegratedMap, pk=integrated_map_id)
+    assay = map.assay
 
-    product = get_object_or_404(DataProduct, pk=data_product_id)
-    assay = product.assay
     if assay.assayName=="rna-seq" or assay.assayName=="multiome-rna-atac":
         template = loader.get_template("integrated_maps/rna-detail.html")
     elif assay.assayName=="atac":
@@ -34,21 +33,22 @@ def detail(request, data_product_id):
         template = loader.get_template("integrated_maps/codex-detail.html")
     else:
         template = loader.get_template("integrated_maps/detail.html")
-    context = {"product": product,}
+
+    context = {"map": map,}
     return HttpResponse(template.render(context, request))
-    #return render(request, "integrated_maps/detail.html", {"product": product})
+
 
 def detail_latest(request, tissuecode, assayName):
     tissue = Tissue.objects.filter(tissuecode=tissuecode)
     assay = Assay.objects.filter(assayName=assayName)
     try:
-        latest_data_product = DataProduct.objects.filter(
+        latest_integrated_map = IntegratedMap.objects.filter(
             tissue__in=tissue, 
             assay__in=assay
         ).order_by("-creation_time")[0]
     except IndexError:
-        raise Http404("Data product not found for the specified tissue and assay.")
-    context = {"product": latest_data_product}
+        raise Http404("Integrated map not found for the specified tissue and assay.")
+    context = {"map": latest_integrated_map}
     if assayName in ["rna-seq", "multiome-rna-atac"]:
         template = loader.get_template("integrated_maps/rna-detail.html")
     elif assayName == "atac":
@@ -60,12 +60,13 @@ def detail_latest(request, tissuecode, assayName):
 
     return HttpResponse(template.render(context, request))
 
+
 def tissue(request, tissuetype):
 
     tissue = Tissue.objects.filter(tissuetype=tissuetype)
-    tissue_data_product_list = DataProduct.objects.filter(tissue__in=tissue.all()).order_by("-creation_time")
+    tissue_integrated_map_list = IntegratedMap.objects.filter(tissue__in=tissue.all()).order_by("-creation_time")
     template = loader.get_template("integrated_maps/index.html")
     context = {
-        "latest_data_product_list": tissue_data_product_list,
+        "latest_integrated-map_list": tissue_integrated_map_list,
     }
     return HttpResponse(template.render(context, request))

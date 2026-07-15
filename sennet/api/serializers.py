@@ -22,20 +22,25 @@ class AssaySerializer(serializers.ModelSerializer):
         model = Assay
         fields = ['assayName']
 
-
 class DatasetSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
+    sennet_id = serializers.SerializerMethodField()
     
-    def get_hubmap_id(self,obj):
-        return obj.hbmid
+    def get_sennet_id(self,obj):
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)
 
-class DataProductSerializer(serializers.Serializer):
-    data_product_id = serializers.UUIDField(read_only=True)
+class OrganismSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organism
+        fields = ['organismName']
+
+class IntegratedMapSerializer(serializers.Serializer):
+    integrated_map_id = serializers.UUIDField(read_only=True)
     creation_time = serializers.DateTimeField(read_only=True)
     tissue = TissueSerializer(read_only=True, many=False)
+    organism = OrganismSerializer(read_only=True, many=False)
     dataSets = DatasetSerializer(read_only=True, many=True)
     assay = AssaySerializer(required=True)
     shiny_app = serializers.URLField(read_only=True)  # Add this line
@@ -44,14 +49,14 @@ class DataProductSerializer(serializers.Serializer):
     def get_download(self, obj):
         if obj.download is not None:
             if obj.assay.assayName == "rna-seq":
-                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             elif obj.assay.assayName =="multiome-rna-atac":
                 return obj.download+"/"+obj.tissue.tissuecode+"_processed.h5mu"
             else:
                 return "None"
         else:
             return "None"
-   
+
     download_raw = serializers.SerializerMethodField()
     def get_download_raw(self, obj):
         if obj.download is not None:
@@ -60,7 +65,7 @@ class DataProductSerializer(serializers.Serializer):
             elif obj.assay.assayName == "atac":
                 return obj.download+"/"+obj.tissue.tissuecode+".h5mu"
             else:
-                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5ad"
+                return obj.download+"/"+obj.tissue.tissuecode+"_raw.h5mu"
         else:
             return "None"
 
@@ -71,10 +76,10 @@ class DataProductSerializer(serializers.Serializer):
 
 class DatasetMappingSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    hubmap_id = serializers.SerializerMethodField()
-    dataproduct_set = DataProductSerializer(many=True, read_only=True)
+    sennet_id = serializers.SerializerMethodField()
+    integratedmap_set = IntegratedMapSerializer(many=True, read_only=True)
     
-    def get_hubmap_id(self,obj):
-        return obj.hbmid
+    def get_sennet_id(self,obj):
+        return obj.sntid
         
     annotation_metadata = serializers.JSONField(read_only=True)

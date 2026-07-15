@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "integrated_maps.apps.DataProductsConfig",
+    "integrated_maps.apps.IntegratedMapsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -85,7 +85,7 @@ DATABASES = {
         "NAME": "postgres",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "db",
+        "HOST": "sennet-db",
         "PORT": 5432,
     },
 }
@@ -144,7 +144,7 @@ REST_FRAMEWORK = {
 }
 
 VERSION_PATHS = [
-    Path("/opt/data-products-ui/version.json"),
+    Path("/opt/integrated-maps-ui/version.json"),
     Path("/code/version.json"),
 ]
 

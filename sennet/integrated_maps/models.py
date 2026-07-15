@@ -59,9 +59,23 @@ class Assay(models.Model):
         return "%s" % self.assayName
 
 
-class DataProduct(models.Model):
+class Organism(models.Model):
+    organismName=models.CharField(max_length=32)
+    @classmethod
+    def get_default_pk(cls):
+        organism, created = cls.objects.get_or_create(
+            organismName = "human"
+        )
+        return organism.pk
+    def __repr__(self):
+        return self.organismName
+    def __str__(self):
+        return "%s" % self.organismName
 
-    data_product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+class IntegratedMap(models.Model):
+
+    integrated_map_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     creation_time = models.DateTimeField(auto_now_add=True)
     tissue = models.ForeignKey(Tissue, on_delete=models.CASCADE)
@@ -73,20 +87,16 @@ class DataProduct(models.Model):
     raw_total_cell_count = models.PositiveIntegerField(null=True, blank=True)
     processed_total_cell_count = models.PositiveIntegerField(null=True, blank=True)
     processed_cell_type_counts = models.JSONField(blank=True)
-    raw_cell_type_counts = models.JSONField(blank=True)
     raw_file_size_bytes = models.PositiveBigIntegerField(blank=True)
     processed_file_sizes_bytes = models.PositiveBigIntegerField(blank=True)
     assay = models.ForeignKey(Assay, on_delete=models.CASCADE, default=Assay.get_default_pk)
+    organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=Organism.get_default_pk)
 
-    #link to this data product's shiny app
+    #link to this integrated map's shiny app
     shiny_app = models.URLField(null=True, blank=True)
 
     def __repr__(self):
-        return self.data_product_id
+        return self.integrated_map_id
 
     def __str__(self):
-        return "%s" % self.data_product_id
-
-    # def __str__(self):
-    #     datasets_str = ", ".join([str(dataset) for dataset in self.datasets.all()])
-    #     return f"{self.data_product_id} (Datasets: {datasets_str})"
+        return "%s" % self.integrated_map_id

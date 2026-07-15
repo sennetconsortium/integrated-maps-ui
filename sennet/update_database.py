@@ -8,14 +8,14 @@ import os
 import pandas as pd
 import shutil
 import yaml
-from integrated_maps.models import DataProduct, Tissue, Assay, Dataset
+from integrated_maps.models import IntegratedMap, Tissue, Assay, Dataset
 from argparse import ArgumentParser
 from pathlib import Path
 
 def change_dataset_mapping():
     datasets = Dataset.objects.order_by("sntid")
     for ds in datasets:
-        data_prod = ds.data_product
+        data_prod = ds.integrated_map
         data_prod.dataSets.add(ds)
 
 def main():
